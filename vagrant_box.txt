@@ -1,0 +1,12 @@
+generic/fedora33
+jborean93/WindowsServer2016
+gusztavvargadr/windows-10
+ifly53e/metasploitable2updateable
+danimaetrix/windows-8.1
+goncalor/win7-x86-flare-vm
+ubuntu/impish64
+kalilinux/rolling
+plaurin/solaris-11_3
+goodbit22/redstaros
+rapid7/metasploitable3-ub1404
+rapid7/metasploitable3-win2k8

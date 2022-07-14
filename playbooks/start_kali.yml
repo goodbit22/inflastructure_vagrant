@@ -1,0 +1,15 @@
+---
+- name: konfiguracja kali linux
+  become: True
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  hosts:  kali
+  tasks:
+    - name: test Kali Linux 
+      debug:
+        msg: "test {{ansible_hostname}}"
+    - name: update Kali Linux
+      apt:
+          update_cache: yes
+          cache_valid_time: 3600

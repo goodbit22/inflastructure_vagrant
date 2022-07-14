@@ -1,0 +1,8 @@
+---
+- name: Testowanie windows
+  gather_facts: true
+  hosts: win10, win8_1, win_server_2016
+  tasks:
+  - name: test windows
+    debug:
+      msg: "hosty {{ ansible_hostname }}"

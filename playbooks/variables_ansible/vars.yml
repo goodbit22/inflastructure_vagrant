@@ -1,0 +1,14 @@
+---
+python_packages_to_install_kali:
+  - python-nmap
+  - pymetasploit3
+  - pyfiglet
+  - termcolor
+  - colorama
+  - pycrypto
+  - paramiko
+
+
+software_to_install_kali:
+  - terminator
+  - xprobe2
