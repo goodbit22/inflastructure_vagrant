@@ -16,13 +16,12 @@ jobs:
           python-version: '3.10' 
       - name: install dependency
         run: pip install -r requirements-pipeline.txt
-      - name: install shellcheck
-        run: sudo apt install shellcheck
           
   linter:
     runs-on: ubuntu-latest
     needs: [pre]
     steps: 
+    - uses: actions/checkout@v2
     - name: Ansible lint
       run: |
         ansible-lint playbooks
@@ -37,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [pre]
     steps: 
+    - uses: actions/checkout@v2
     - name: semgrep
       run: semgrep --config auto 
      
