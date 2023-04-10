@@ -1,0 +1,41 @@
+name: CI
+on:
+  push: 
+    branches: [main]
+  pulli_request:
+    branches: [main]
+
+jobs:
+  pre:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - name: install dependency
+        run: pip install -r requirements-pipeline.txt
+      - name: install shellcheck
+        run: sudo apt install shellcheck
+          
+  linter:
+    runs-on: ubuntu-latest
+    needs: [pre]
+    steps: 
+    - name: Ansible lint
+      run: |
+        ansible-lint playbooks
+    - name: |
+        shellcheck attack_systems_scripts/*.sh
+        shellcheck scripts_linux_ansible/*.sh
+        shellcheck ArielRunVagrant.sh
+        shellcheck /scripts_linux_ansible/KaliConfSofts/*.sh
+  
+  scan_secure:
+    runs-on: ubuntu-latest
+    needs: [pre]
+    steps: 
+    - name: semgrep
+      run: semgrep --config auto 
+     
