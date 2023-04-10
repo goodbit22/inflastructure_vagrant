@@ -26,7 +26,8 @@ jobs:
     - name: Ansible lint
       run: |
         ansible-lint playbooks
-    - name: |
+    - name: shellcheck
+      run: |
         shellcheck attack_systems_scripts/*.sh
         shellcheck scripts_linux_ansible/*.sh
         shellcheck ArielRunVagrant.sh
