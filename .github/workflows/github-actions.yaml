@@ -18,16 +18,12 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
-          ANSIBLE_DIRECTORY: ./playbooks
+          ANSIBLE_DIRECTORY: /playbooks
           VALIDATE_BASH: true
+          VALIDATE_ANSIBLE: ttrue
+          VALIDATE_GITHUB_ACTIONS: true
+          VALIDATE_MARKDOWN: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: shellcheck
-        if: always()
-        run: |
-          shellcheck attack_systems_scripts/*.sh
-          shellcheck scripts_linux_ansible/*.sh
-          shellcheck ArielRunVagrant.sh
-          shellcheck /scripts_linux_ansible/KaliConfSofts/*.sh
   
   scan_secure:
     runs-on: ubuntu-latest
