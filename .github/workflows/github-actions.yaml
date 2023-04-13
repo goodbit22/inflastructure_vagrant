@@ -18,10 +18,11 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
-          ANSIBLE_DIRECTORY: playbooks
+          ANSIBLE_DIRECTORY: ./playbooks
           VALIDATE_BASH: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: shellcheck
+        if: always()
         run: |
           shellcheck attack_systems_scripts/*.sh
           shellcheck scripts_linux_ansible/*.sh
@@ -30,10 +31,11 @@ jobs:
   
   scan_secure:
     runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    if: (github.actor != 'dependabot[bot]')
     steps: 
     - uses: actions/checkout@v3
-    - name: semgrep-action
-      uses: returntocorp/semgrep-action@v1
     - name: semgrep
       run: semgrep --config auto 
      
