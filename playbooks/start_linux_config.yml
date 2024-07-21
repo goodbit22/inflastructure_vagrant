@@ -1,38 +1,36 @@
 ---
 - name: konfiguracja ubuntu i fedory
-  hosts: ubuntu-21.10,fedora33 
-  become: True
-  gather_facts: True
+  hosts: ubuntu-21.10,fedora33
+  become: true
+  gather_facts: true
   vars:
     new_user: guest_temp
     admin_user: vagrant
     ansible_python_interpreter: /usr/bin/python3
   tasks:
-    - name: test ubuntu 
-      debug: 
-        msg: "ubuntu hostname {{ ansible_hostname }}"
+    - name: test ubuntu
       when: ansible_distribution == "Ubuntu"
+      ansible.builtin.debug:
+        msg: ubuntu hostname {{ ansible_hostname }}
 
     - name: update and upgrade ubuntu
-      apt:
-          update_cache: yes
-          cache_valid_time: 3600
       when: ansible_distribution == "Ubuntu"
- 
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
     - name: test fedora33
-      debug:
-        msg: "fedora33 hostname {{ ansible_hostname }}"
       when: ansible_distribution == "Fedora"
-      
+      ansible.builtin.debug:
+        msg: fedora33 hostname {{ ansible_hostname }}
+
     - name: update and upgrade fedora33
-      yum:
-        update_cache: yes
       when: ansible_distribution == "Fedora"
+      ansible.builtin.yum:
+        update_cache: true
 
     - name: create user guest_temp
-      user: 
+      ansible.builtin.user:
         name: "{{ new_user }}"
         state: present
-        createhome: yes
-
-
+        createhome: true
