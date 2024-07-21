@@ -1,47 +1,44 @@
 ---
 - name: Installing Kali Linux packages and libraries
-  become: True
-  gather_facts: False
+  become: true
+  gather_facts: false
   vars:
     ansible_python_interpreter: /usr/bin/python3
   vars_files:
-  - ./variables_ansible/vars.yml
+    - ./variables_ansible/vars.yml
   hosts: kali
   tasks:
-  - name: Packages installation
-    apt: name="{{ software_to_install_kali }}" update_cache=yes cache_valid_time=3600
-    async: 3600
-    poll: 0
-    register: linux_apt_install
-  - block:
-    - name: Creates directory softwares
-      file: 
-        path: softwares
-        state: directory
-        owner: vagrant
-        group: vagrant
-    - name: Copy script Kanna.sh
-      copy:
-        src: ../scripts_linux_ansible/KaliConfSofts/Kanna.sh
-        dest: softwares/Kanna.sh
-        owner: vagrant
-        group: vagrant
-        mode: 0644
-    - name: Run the script kali_soft.sh 
-      script: ../scripts_linux_ansible/KaliConfSofts/kali_soft.sh  
-    rescue: 
-    - debug: msg="Problem ze skopiowaniem skryptu lub utworzeniem katalogu" 
-  - name: install the python packages  
-    pip: name="{{ python_packages_to_install_kali }}"
-  - name: enable and start postgresql
-    service:
-      name: postgresql
-      enabled: yes
-      state: started
-  - name: waiting for apt install to finish 
-    async_status:
-      jid: "{{ linux_apt_install.ansible_job_id }}" 
-    register: result_linux
-    until: result_linux.finished
-    retries: 3600
+    - name: Packages installation
+      async: 3600
+      poll: 0
 
+    - block:
+        - name: Creates directory softwares
+          ansible.builtin.file:
+            path: softwares
+            state: directory
+            owner: vagrant
+
+        - name: Copy script Kanna.sh
+          ansible.builtin.copy:
+            src: ../scripts_linux_ansible/KaliConfSofts/Kanna.sh
+            dest: softwares/Kanna.sh
+            owner: vagrant
+            group: vagrant
+
+        - name: Run the script kali_soft.sh
+          script: ../scripts_linux_ansible/KaliConfSofts/kali_soft.sh
+
+    - name: install the python packages
+
+    - name: enable and start postgresql
+      ansible.builtin.service:
+        name: postgresql
+        enabled: true
+
+    - name: waiting for apt install to finish
+      register: result_linux
+      until: result_linux.finished
+      retries: 3600
+      ansible.builtin.async_status:
+        jid: "{{ linux_apt_install.ansible_job_id }}"

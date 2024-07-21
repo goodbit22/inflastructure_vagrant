@@ -8,7 +8,6 @@ python_packages_to_install_kali:
   - pycrypto
   - paramiko
 
-
 software_to_install_kali:
   - terminator
   - xprobe2
