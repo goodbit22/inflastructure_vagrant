@@ -10,7 +10,7 @@ jobs:
     continue-on-error: true
     steps: 
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Lint Code Base
@@ -31,7 +31,7 @@ jobs:
       image: returntocorp/semgrep
     if: (github.actor != 'dependabot[bot]')
     steps: 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: semgrep
       run: semgrep --config auto 
      
